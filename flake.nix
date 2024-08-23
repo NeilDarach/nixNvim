@@ -210,7 +210,7 @@
         };
         # and a set of categories that you want
         # (and other information to pass to lua)
-        categories = common_categories // args {
+        categories = common_categories args // {
         };
       };
       nvim-dev = args@{pkgs, ...} :{
