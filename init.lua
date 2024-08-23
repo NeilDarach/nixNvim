@@ -1,5 +1,6 @@
-vim.wo.number = true
-vim.cmd("set tabstop=8")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
-vim.cmd("set noexpandtab")
+require('nixCatsUtils').setup {
+  non_nix_value = true,
+}
+
+require("vim-options")
+require("plugins")

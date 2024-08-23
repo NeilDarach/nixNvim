@@ -18,7 +18,7 @@
 # each section is tagged with its relevant help section.
 
 {
-  description = "A Lua-natic's neovim flake, with extra cats! nixCats!";
+  description = "A Lua-natic's neovim flake, with extra cats! nixCats! ";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -108,7 +108,11 @@
       };
 
       # This is for plugins that will load at startup without using packadd:
-      startupPlugins = {
+      startupPlugins = with pkgs.vimPlugins; {
+        theme = builtins.getAttr categories.colorscheme {
+          "onedark" = onedark-nvim;
+          "catppuccin" = catppuccin-nvim;
+          };
         gitPlugins = with pkgs.neovimPlugins; [ ];
         general = with pkgs.vimPlugins; [ ];
       };
@@ -168,27 +172,17 @@
     # All categories you wish to include must be marked true,
     # but false may be omitted.
     # This entire set is also passed to nixCats for querying within the lua.
-
-    # see :help nixCats.flake.outputs.packageDefinitions
-    packageDefinitions = {
-      # These are the names of your packages
-      # you can include as many as you wish.
-      nvim = {pkgs , ... }: {
-        # they contain a settings set defined above
-        # see :help nixCats.flake.outputs.settings
-        settings = {
-          wrapRc = true;
-          # IMPORTANT:
-          # your alias may not conflict with your other packages.
-          aliases = [ "vim" ];
-          # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
-        };
-        # and a set of categories that you want
-        # (and other information to pass to lua)
-        categories = {
+    common_settings = { pkgs, ...}: {
+      configDirName = "nvim";
+      wrapRc = true;
+      unwrappedCfgPath = "/Users/neil/nixNvim";
+      };
+    common_categories = { pkgs, ...}: {
           general = true;
           gitPlugins = true;
           customPlugins = true;
+          theme = true;
+          colorscheme="onedark";
           test = true;
           example = {
             youCan = "add more than just booleans";
@@ -200,6 +194,30 @@
             ];
           };
         };
+
+    # see :help nixCats.flake.outputs.packageDefinitions
+    packageDefinitions = {
+      # These are the names of your packages
+      # you can include as many as you wish.
+      nvim = args@{pkgs , ... }: {
+        # they contain a settings set defined above
+        # see :help nixCats.flake.outputs.settings
+        settings = common_settings args // {
+          # IMPORTANT:
+          # your alias may not conflict with your other packages.
+          aliases = [ "vim" ];
+          # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+        };
+        # and a set of categories that you want
+        # (and other information to pass to lua)
+        categories = common_categories // args {
+        };
+      };
+      nvim-dev = args@{pkgs, ...} :{
+        settings = common_settings args // {
+          wrapRc = false;
+          };
+        categories = common_categories args // {};
       };
     };
   # In this section, the main thing you will need to do is change the default package name
@@ -214,6 +232,7 @@
       inherit nixpkgs system dependencyOverlays extra_pkg_config;
     } categoryDefinitions packageDefinitions;
     defaultPackage = nixCatsBuilder defaultPackageName;
+    devPackage = nixCatsBuilder "nvim-dev";
     # this is just for using utils such as pkgs.mkShell
     # The one used to build neovim is resolved inside the builder
     # and is passed to our categoryDefinitions and packageDefinitions
@@ -224,14 +243,21 @@
 
     # this will make a package out of each of the packageDefinitions defined above
     # and set the default package to the one passed in here.
-    packages = utils.mkAllWithDefault defaultPackage;
+	    packages = utils.mkAllWithDefault defaultPackage;
 
-    # choose your package for devShell
-    # and add whatever else you want in it.
-    devShells = {
+	    # choose your package for devShell
+	    # and add whatever else you want in it.
+	    devShells = {
       default = pkgs.mkShell {
         name = defaultPackageName;
         packages = [ defaultPackage ];
+        inputsFrom = [ ];
+        shellHook = ''
+        '';
+      };
+      dev = pkgs.mkShell {
+        name = "dev-cfg";
+        packages = [ devPackage ];
         inputsFrom = [ ];
         shellHook = ''
         '';
