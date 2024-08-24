@@ -1,5 +1,3 @@
-require('plugins.lazyinit')
---[[ 
 local colorschemer = nixCats('colorscheme')
 if not require('nixCatsUtils').isNixCats then
   colorschemer = 'onedark'
@@ -14,4 +12,3 @@ end
 if colorschemer ~= "" then
   vim.cmd.colorscheme(colorschemer)
 end
-]]
