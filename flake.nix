@@ -1,6 +1,7 @@
 # Copyright (c) 2023 BirdeeHub
 # Licensed under the MIT license
 
+
 {
   description = "Generic NVim configuation";
 
@@ -67,10 +68,11 @@
 	    stdenv.cc.cc
 	    nix-doc
 	    lua-language-server
+	    bash-language-server
 	    nixd
 	    stylua
 	    ];
-	kickstart-lint = [
+	lint = [
 	  markdownlint-cli
 	  ];
       };
@@ -105,16 +107,16 @@
 	  mini-nvim
 	  nvim-treesitter.withAllGrammars
 	  ];
-	kickstart-indent_line = [
+	indent_line = [
 	  indent-blankline-nvim
 	  ];
-	kickstart-lint = [
+	lint = [
 	  nvim-lint
 	  ];
-	kickstart-autopairs = [
+	autopairs = [
 	  nvim-autopairs
 	  ];
-	kickstart-neo-tree = [
+	neo-tree = [
 	  neo-tree-nvim
 	  nui-nvim
 	  nvim-web-devicons
@@ -173,11 +175,11 @@
 	  customPlugins = true;
           theme = true;
           colorscheme="onedark";
-	  kickstart-autopairs = true;
-	  kickstart-neo-tree = true;
-	  kickstart-lint = true;
-	  kickstart-indent_line = true;
-	  kickstart-gitsigns = true;
+	  autopairs = true;
+	  neo-tree = true;
+	  lint = true;
+	  indent_line = true;
+	  gitsigns = true;
 	  have_nerd_font = true;
           };
 

@@ -45,3 +45,6 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.termguicolors = true
 vim.api.nvim_set_option("clipboard","unnamedplus")
+
+
+vim.highlight.priorities.semantic_tokens = 95

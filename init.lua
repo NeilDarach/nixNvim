@@ -1,10 +1,10 @@
-require('nixCatsUtils').setup {
-  non_nix_value = true,
-}
+require("nixCatsUtils").setup({
+	non_nix_value = true,
+})
 
 -- two space tabbing
 vim.cmd("set noexpandtab")
-vim.cmd("set tabstop=8")
+vim.cmd("set tabstop=2") -- vim-sleuth uses this
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
 
@@ -14,7 +14,6 @@ vim.g.maplocalleader = " "
 
 -- pull have_nerd_font from nix
 vim.g.have_nerd_font = nixCats("have_nerd_font")
-
 
 -- Line numbers
 vim.wo.number = true
@@ -30,22 +29,22 @@ vim.opt.showmode = false
 vim.opt.clipboard = "unnamedplus"
 
 if vim.g.neovide then
-  vim.keymap.set('v', '<D-c>', '"+y') -- Copy
-  vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
-  vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
-  vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
-  vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
+	vim.keymap.set("v", "<D-c>", '"+y') -- Copy
+	vim.keymap.set("n", "<D-v>", '"+P') -- Paste normal mode
+	vim.keymap.set("v", "<D-v>", '"+P') -- Paste visual mode
+	vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
+	vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
 end
 
 -- Allow clipboard copy paste in neovim
-vim.api.nvim_set_keymap('','<D-v>', '+p<CR>', {  noremap = true, silent = true })
-vim.api.nvim_set_keymap('!','<D-v>', '<C-R>+', {  noremap = true, silent = true })
-vim.api.nvim_set_keymap('t','<D-v>', '<C-R>+', {  noremap = true, silent = true })
-vim.api.nvim_set_keymap('v','<D-v>', '<C-R>+', {  noremap = true, silent = true })
+vim.api.nvim_set_keymap("", "<D-v>", "+p<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("!", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<D-v>", "<C-R>+", { noremap = true, silent = true })
 
 -- Easy exit from leader state
-vim.keymap.set({'n','v'}, '<Space>', '<Nop>', { silent = true })
-vim.keymap.set({'n'}, 'q', '<Nop>', { silent = true })
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+vim.keymap.set({ "n" }, "q", "<Nop>", { silent = true })
 
 -- Preserve indent for wrapped lines ??
 vim.o.breakindent = false
@@ -58,7 +57,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- keep sign column on
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = "yes"
 
 -- faster update
 vim.opt.updatetime = 250
@@ -72,10 +71,10 @@ vim.opt.splitbelow = true
 
 -- display certain whitespace
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- preview substitutions
-vim.opt.inccommand = 'split'
+vim.opt.inccommand = "split"
 
 -- hilight current line
 vim.opt.cursorline = true
@@ -85,37 +84,35 @@ vim.opt.scrolloff = 5
 
 -- Search elements say higlighted until cancelled
 vim.o.hlsearch = true
-vim.keymap.set('n', '<leader>h', '<CMD>nohlsearch<CR>')
-vim.keymap.set('n', '<ESC>', '<CMD>nohlsearch<CR>')
+vim.keymap.set("n", "<leader>h", "<CMD>nohlsearch<CR>")
+vim.keymap.set("n", "<ESC>", "<CMD>nohlsearch<CR>")
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message"})
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message"})
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages"})
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list"})
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 -- exit terminal mode without <C-\><C-n>
-vim.keymap.set('t', '<ESC><ESC>', '<C-\\><C-n>', { desc = "Exit terminal mode" })
+vim.keymap.set("t", "<ESC><ESC>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Navigate vim panes better
-vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
-vim.keymap.set('n', '<c-j>', ':wincmd j<CR>')
-vim.keymap.set('n', '<c-h>', ':wincmd h<CR>')
-vim.keymap.set('n', '<c-l>', ':wincmd l<CR>')
+vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
+vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
+vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
+vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
 
 vim.o.termguicolors = true
-
-
 
 -- Basic autocommand, see :help lua-guide-autocommands
 
 -- Hilight when yanking text
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = "Hilight when yanking text",
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', {clear = true}),
-  callback = function()
-    vim.highlight.on_yank()
-    end,
-  })
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Hilight when yanking text",
+	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+})
 
 require("plugins")
