@@ -1,21 +1,22 @@
 # Copyright (c) 2023 BirdeeHub
 # Licensed under the MIT license
-
-
 {
   description = "Generic NVim configuation";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
     nixCats.url = "github:BirdeeHub/nixCats-nvim?dir=nix";
+    lze.url = "github:BirdeeHub/lze";
+    lze.inputs.nixpkgs.follows = "nixpkgs";
     # see :help nixCats.flake.inputs
   };
 
   # see :help nixCats.flake.outputs
-  outputs = { self, nixpkgs, nixCats,... }@inputs: let
+  outputs = { self, nixpkgs, flake-utils, nixCats, ... }@inputs: let
     inherit (nixCats) utils;
     luaPath = "${./.}";
-    forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
+    forEachSystem = flake-utils.lib.eachSystem flake-utils.lib.allSystems;
     # the following extra_pkg_config contains any values
     # which you want to pass to the config set of nixpkgs
     # import nixpkgs { config = extra_pkg_config; inherit system; }
@@ -25,18 +26,15 @@
       # allowUnfree = true;
     };
 
-    inherit (forEachSystem (system: let
-      # see :help nixCats.flake.outputs.overlays
-      dependencyOverlays = /* (import ./overlays inputs) ++ */ [
-        # Once we add this overlay to our nixpkgs, we are able to
-        # use `pkgs.neovimPlugins`, which is a set of our plugins.
-        (utils.standardPluginOverlay inputs)
-        # add any flake overlays here.
-      ];
-      # these overlays will be wrapped with ${system}
-      # and we will call the same utils.eachSystem function
-      # later on to access them.
-    in { inherit dependencyOverlays; })) dependencyOverlays;
+    system_resolved = forEachSystem (system: let
+      dependencyOverlays = (import ./overlays inputs) ++ [
+        (utils.sanitizedPluginOverlay inputs)
+	inputs.lze.overlays.default
+	];
+
+      #(import ./overlays inputs) ++ [ (standardPluginOverlay inputs)];
+      in {inherit dependencyOverlays;});
+    inherit (system_resolved) dependencyOverlays;
     # see :help nixCats.flake.outputs.categories
     # and
     # :help nixCats.flake.outputs.categoryDefinitions.scheme
@@ -61,20 +59,9 @@
       # at RUN TIME for plugins. Will be available to PATH within neovim terminal
       # this includes LSPs
       lspsAndRuntimeDeps = with pkgs; {
-        general = [
-	    universal-ctags
-	    ripgrep
-	    fd
-	    stdenv.cc.cc
-	    nix-doc
-	    lua-language-server
-	    bash-language-server
-	    nixd
-	    stylua
-	    ];
-	lint = [
-	  markdownlint-cli
-	  ];
+        general = with pkgs; [
+	curl
+        ];
       };
 
       # This is for plugins that will load at startup without using packadd:
@@ -84,8 +71,7 @@
           "catppuccin" = catppuccin-nvim;
           };
         general = with pkgs.neovimPlugins; [
-	  vim-sleuth
-	  lazy-nvim
+	  lze
 	  comment-nvim
 	  gitsigns-nvim
 	  which-key-nvim
@@ -120,7 +106,6 @@
 	  neo-tree-nvim
 	  nui-nvim
 	  nvim-web-devicons
-	  plenary-nvim
 	  ];
       };
 
@@ -131,7 +116,11 @@
 
       # shared libraries to be added to LD_LIBRARY_PATH
       # variable available to nvim runtime
-      sharedLibraries = { };
+      sharedLibraries = { 
+        general = {
+	  git = with pkgs; [ libgit2 ];
+	  };
+	};
       
 
       # environmentVariables:
