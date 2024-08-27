@@ -59,10 +59,11 @@
       # at RUN TIME for plugins. Will be available to PATH within neovim terminal
       # this includes LSPs
       lspsAndRuntimeDeps = with pkgs; {
-        general = with pkgs; [
-	curl
-        ];
-      };
+        general = [ curl ];
+	bash = [ nodePackages.bash-language-server ];
+	lua = [ lua-language-server ];
+	nix = [ nixd ];
+        };
 
       # This is for plugins that will load at startup without using packadd:
       startupPlugins = with pkgs.vimPlugins; {
@@ -118,7 +119,7 @@
       # variable available to nvim runtime
       sharedLibraries = { 
         general = {
-	  git = with pkgs; [ libgit2 ];
+	  git = with pkgs; [ ];
 	  };
 	};
       
@@ -149,6 +150,13 @@
       };
     };
 
+    extraNixdItems = pkgs: {
+      nixpkgs = inputs.nixpkgs.outPath;
+      flake-path = inputs.self.outPath;
+      system = pkgs.system;
+      systemCfgName = "nd@mac";
+    };
+
     # And then build a package with specific categories from above here:
     # All categories you wish to include must be marked true,
     # but false may be omitted.
@@ -160,6 +168,9 @@
 
     common_categories = { pkgs, ...}: {
           general = true;
+	  bash = true;
+	  lua = true;
+	  nix = true;
           gitPlugins = true;
 	  customPlugins = true;
           theme = true;
@@ -170,6 +181,7 @@
 	  indent_line = true;
 	  gitsigns = true;
 	  have_nerd_font = true;
+	  nixdExtras = extraNixdItems pkgs;
           };
 
     # see :help nixCats.flake.outputs.packageDefinitions
