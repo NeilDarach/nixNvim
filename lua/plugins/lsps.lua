@@ -1,3 +1,4 @@
+-- comment
 local catUtils = require("nixCatsUtils")
 local servers = {}
 
@@ -124,7 +125,11 @@ end
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("nixCats-lsp-attach", { clear = true }),
 	callback = function(event)
-		M.on_attach(vim.lsp.get_client_by_id(event.data.client_id), event.buf)
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+		if client and client.server_capabilities.semanticTokensProvider then
+		  client.server_capabilities.semanticTokensProvider = nil
+	  end
+		M.on_attach(client, event.buf)
 	end,
 })
 
@@ -161,7 +166,7 @@ require("lze").load({
 				mason_lspconfig.setup_handlers({
 					function(server_name)
 						require("lspconfig")[server_name].setup({
-    					capabilities = M.get_capabilities(server_name),
+							capabilities = M.get_capabilities(server_name),
 							settings = servers[server_name],
 							filetypes = (servers[server_name] or {}).filetypes,
 						})
