@@ -92,6 +92,7 @@
 	  cmp-path
 	  todo-comments-nvim
 	  mini-nvim
+	  nvim-treesitter-textobjects
 	  nvim-treesitter.withAllGrammars
 	  ];
 	indent_line = [

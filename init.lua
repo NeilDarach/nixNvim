@@ -20,7 +20,7 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 
 -- mouse mode
-vim.opt.mouse = "a"
+vim.opt.mouse = ""
 
 -- mode is already on the status line
 vim.opt.showmode = false
