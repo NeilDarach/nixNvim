@@ -21,22 +21,22 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 
 if vim.g.neovide then
-  vim.keymap.set('v', '<D-c>', '"+y') -- Copy
-  vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
-  vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
-  vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
-  vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
+	vim.keymap.set('v', '<D-c>', '"+y')         -- Copy
+	vim.keymap.set('n', '<D-v>', '"+P')         -- Paste normal mode
+	vim.keymap.set('v', '<D-v>', '"+P')         -- Paste visual mode
+	vim.keymap.set('c', '<D-v>', '<C-R>+')      -- Paste command mode
+	vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
 end
 
 -- Allow clipboard copy paste in neovim
-vim.api.nvim_set_keymap('','<D-v>', '+p<CR>', {  noremap = true, silent = true })
-vim.api.nvim_set_keymap('!','<D-v>', '<C-R>+', {  noremap = true, silent = true })
-vim.api.nvim_set_keymap('t','<D-v>', '<C-R>+', {  noremap = true, silent = true })
-vim.api.nvim_set_keymap('v','<D-v>', '<C-R>+', {  noremap = true, silent = true })
+vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 
 -- Easy exit from leader state
-vim.keymap.set({'n','v'}, '<Space>', '<Nop>', { silent = true })
-vim.keymap.set({'n'}, 'q', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set({ 'n' }, 'q', '<Nop>', { silent = true })
 
 -- Preserve indent for wrapped lines
 vim.o.breakindent = false
@@ -44,7 +44,7 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.termguicolors = true
-vim.api.nvim_set_option("clipboard","unnamedplus")
+vim.api.nvim_set_option("clipboard", "unnamedplus")
 
 
 vim.highlight.priorities.semantic_tokens = 95

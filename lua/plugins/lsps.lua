@@ -33,12 +33,12 @@ if nixCats("nix") then
 				options = {
 					nixos = {
 						expr = [[(builtins.getFlake "]]
-							.. nixCats("nixdExtras.flake-path")
-							.. [[").legacyPackages.]]
-							.. nixCats("nixdExtras.system")
-							.. [[.nixosConfigurations."]]
-							.. nixCats("nixdExtras.systemCfgName")
-							.. [[".options]],
+								.. nixCats("nixdExtras.flake-path")
+								.. [[").legacyPackages.]]
+								.. nixCats("nixdExtras.system")
+								.. [[.nixosConfigurations."]]
+								.. nixCats("nixdExtras.systemCfgName")
+								.. [[".options]],
 					},
 				},
 				diagnostic = {
@@ -127,8 +127,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(event)
 		local client = vim.lsp.get_client_by_id(event.data.client_id)
 		if client and client.server_capabilities.semanticTokensProvider then
-		  client.server_capabilities.semanticTokensProvider = nil
-	  end
+			client.server_capabilities.semanticTokensProvider = nil
+		end
 		M.on_attach(client, event.buf)
 	end,
 })

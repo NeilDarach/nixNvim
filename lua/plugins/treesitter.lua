@@ -20,7 +20,7 @@ require("lze").load({
 						node_incremental = "<CR>",
 						node_decremental = "<bs>",
 						scope_incremental = "grc",
-				  },
+					},
 				},
 				textobjects = {
 					select = {
@@ -29,10 +29,10 @@ require("lze").load({
 						keymaps = {
 							--  Not generally working.  Assignment doesn't seem to match, parameter is spotty
 							['aa'] = { query = '@parameter.outer', desc = "Select [a] p[a]rameter" },
-							["a="] = { query = "@assignment.outer", desc = "Select outer part of an assignment"},
-							["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment"},
-							["l="] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment"},
-							["r="] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment"},
+							["a="] = { query = "@assignment.outer", desc = "Select outer part of an assignment" },
+							["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment" },
+							["l="] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
+							["r="] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
 						}
 					},
 					move = {
