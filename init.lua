@@ -2,11 +2,11 @@ require("nixCatsUtils").setup({
 	non_nix_value = true,
 })
 
--- two space tabbing
-vim.cmd("set noexpandtab")
-vim.cmd("set tabstop=2") -- vim-sleuth uses this
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+vim.o.smarttab = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
 
 -- leader must be defined before  plugins load
 vim.g.mapleader = " "

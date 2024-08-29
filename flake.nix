@@ -60,7 +60,7 @@
           # this includes LSPs
           lspsAndRuntimeDeps = with pkgs; {
             general = [ curl ];
-            bash = [ nodePackages.bash-language-server ];
+            bash = [ nodePackages.bash-language-server shfmt shellcheck ];
             lua = [ stylua lua-language-server ];
             nix = [ nixd nixfmt ];
           };
@@ -94,6 +94,7 @@
               mini-nvim
               nvim-treesitter-textobjects
               nvim-treesitter.withAllGrammars
+              lspkind-nvim
             ];
             indent_line = [ indent-blankline-nvim ];
             lint = [ nvim-lint ];
