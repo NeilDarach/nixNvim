@@ -62,7 +62,7 @@
             general = [ curl ];
             bash = [ nodePackages.bash-language-server shfmt shellcheck ];
             lua = [ stylua lua-language-server ];
-            nix = [ nixd nixfmt ];
+            nix = [ nixd nixfmt-classic ];
           };
 
           # This is for plugins that will load at startup without using packadd:
@@ -99,7 +99,7 @@
             indent_line = [ indent-blankline-nvim ];
             lint = [ nvim-lint ];
             autopairs = [ nvim-autopairs ];
-            neo-tree = [ neo-tree-nvim nui-nvim nvim-web-devicons ];
+            nvim-tree = [ nvim-tree-lua nvim-web-devicons ];
           };
 
           # not loaded automatically at startup.
@@ -159,7 +159,7 @@
         theme = true;
         colorscheme = "onedark";
         autopairs = true;
-        neo-tree = true;
+        nvim-tree = true;
         lint = true;
         indent_line = true;
         gitsigns = true;

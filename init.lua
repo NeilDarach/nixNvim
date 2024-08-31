@@ -7,6 +7,7 @@ vim.o.expandtab = true
 vim.o.smarttab = true
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
+vim.o.wrap = false
 
 -- leader must be defined before  plugins load
 vim.g.mapleader = " "
