@@ -1,5 +1,5 @@
 require("nixCatsUtils").setup({
-	non_nix_value = true,
+    non_nix_value = true,
 })
 
 vim.o.shiftwidth = 4
@@ -30,11 +30,11 @@ vim.opt.showmode = false
 vim.opt.clipboard = "unnamedplus"
 
 if vim.g.neovide then
-	vim.keymap.set("v", "<D-c>", '"+y') -- Copy
-	vim.keymap.set("n", "<D-v>", '"+P') -- Paste normal mode
-	vim.keymap.set("v", "<D-v>", '"+P') -- Paste visual mode
-	vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
-	vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
+    vim.keymap.set("v", "<D-c>", '"+y')      -- Copy
+    vim.keymap.set("n", "<D-v>", '"+P')      -- Paste normal mode
+    vim.keymap.set("v", "<D-v>", '"+P')      -- Paste visual mode
+    vim.keymap.set("c", "<D-v>", "<C-R>+")   -- Paste command mode
+    vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
 end
 
 -- Allow clipboard copy paste in neovim
@@ -109,19 +109,24 @@ vim.o.termguicolors = true
 
 -- Hilight when yanking text
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Hilight when yanking text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+    desc = "Hilight when yanking text",
+    group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })
 
 -- Return to the last edited line on open
 vim.api.nvim_create_autocmd("BufReadPost", {
-    pattern = {"*"},
-    callback = function()
-        if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
-            vim.api.nvim_exec("normal! g'\"",false)
+    pattern = { "*" },
+    callback = function(tbl)
+        local tail = tbl.file:match("[^/]+$")
+        if tail == "COMMIT_EDITMSG" then
+            vim.api.nvim_exec("normal! 1G", false)
+        else
+            if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
+                vim.api.nvim_exec("normal! g'\"", false)
+            end
         end
     end
 })
