@@ -2,6 +2,7 @@
 local catUtils = require("nixCatsUtils")
 local servers = {}
 
+
 if nixCats("lua") then
     servers.lua_ls = {
         Lua = {
@@ -54,6 +55,11 @@ if nixCats("nix") then
     end
 end
 
+if nixCats("rust") then
+    servers.rust_analyzer = {
+    };
+end
+
 if nixCats("bash") then
     servers.bashls = {
         filetypes = { "sh" },
@@ -103,14 +109,15 @@ function M.on_attach(_, bufnr)
 						})
 					end
 
-					if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-						map("<leader>th", function()
-							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-						end, "[T]oggle Inlay [H]ints")
-					end
 				end,
 			})
       ]]
+    if vim.lsp.inlay_hint then
+        vim.lsp.inlay_hint.enable(true)
+        map("<leader>th", function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+        end, "[T]oggle Inlay [H]ints")
+    end
 end
 
 function M.get_capabilities(server_name)
