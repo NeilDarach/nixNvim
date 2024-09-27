@@ -19,4 +19,7 @@ if colorschemer == "onedark" then
 end
 if colorschemer ~= "" then
 	vim.cmd.colorscheme(colorschemer)
+    vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]])
+    vim.cmd([[hi EndOfBuffer guibg=NONE ctermbg=NONE]])
+    vim.cmd([[hi StatusLine guibg=NONE ctermbg=NONE]])
 end
