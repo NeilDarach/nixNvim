@@ -110,6 +110,7 @@
               nvim-treesitter-textobjects
               nvim-treesitter.withAllGrammars
               lspkind-nvim
+                            vim-tmux-navigator
             ];
             indent_line = [ indent-blankline-nvim ];
             lint = [ nvim-lint ];
