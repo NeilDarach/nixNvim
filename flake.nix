@@ -9,15 +9,11 @@
     nixCats.url = "github:BirdeeHub/nixCats-nvim?dir=nix";
     lze.url = "github:BirdeeHub/lze";
     lze.inputs.nixpkgs.follows = "nixpkgs";
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs = { nixpkgs.follows = "nixpkgs"; };
       # see :help nixCats.flake.inputs
-    };
   };
 
   # see :help nixCats.flake.outputs
-  outputs = { self, nixpkgs, flake-utils, nixCats, rust-overlay, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, nixCats, ... }@inputs:
     let
       inherit (nixCats) utils;
       luaPath = "${./.}";
@@ -36,7 +32,6 @@
           dependencyOverlays = (import ./overlays inputs) ++ [
             (utils.sanitizedPluginOverlay inputs)
             inputs.lze.overlays.default
-            rust-overlay.overlays.default
           ];
 
           #(import ./overlays inputs) ++ [ (standardPluginOverlay inputs)];
@@ -57,9 +52,7 @@
           # at BUILD TIME for plugins. WILL NOT be available to PATH
           # However, they WILL be available to the shell 
           # and neovim path when using nix develop
-          propagatedBuildInputs = { general = with pkgs; [ ]; 
-                    };
-
+          propagatedBuildInputs = { general = with pkgs; [ ]; };
 
           # lspsAndRuntimeDeps:
           # this section is for dependencies that should be available
@@ -70,14 +63,6 @@
             bash = [ nodePackages.bash-language-server shfmt shellcheck ];
             lua = [ stylua lua-language-server ];
             nix = [ nixd nixfmt-classic ];
-            rust = [
-              (pkgs.rustToolchain or rust-bin.stable.latest.default.override {
-                extensions = [ "rust-src" "rustfmt" ];
-              })
-              rust-analyzer
-              cargo-edit
-              cargo-watch
-            ];
           };
 
           # This is for plugins that will load at startup without using packadd:
@@ -110,7 +95,7 @@
               nvim-treesitter-textobjects
               nvim-treesitter.withAllGrammars
               lspkind-nvim
-                            vim-tmux-navigator
+              vim-tmux-navigator
             ];
             indent_line = [ indent-blankline-nvim ];
             lint = [ nvim-lint ];
@@ -184,7 +169,7 @@
         gitsigns = true;
         have_nerd_font = true;
         nixdExtras = extraNixdItems pkgs;
-        rust = false;
+        rust = true;
       };
 
       # see :help nixCats.flake.outputs.packageDefinitions

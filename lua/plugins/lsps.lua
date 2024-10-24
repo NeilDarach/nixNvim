@@ -55,7 +55,7 @@ if nixCats("nix") then
     end
 end
 
-if nixCats("rust") then
+if nixCats("rust") and (os.execute('command -v rust-analyzer') == 0) then
     servers.rust_analyzer = {
     };
 end
