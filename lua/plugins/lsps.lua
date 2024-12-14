@@ -57,6 +57,9 @@ end
 
 if nixCats("rust") and (os.execute('command -v rust-analyzer') == 0) then
     servers.rust_analyzer = {
+        ["rust-analyzer"] = {
+            checkOnSave = { command = "clippy", },
+        },
     };
 end
 
