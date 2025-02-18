@@ -182,7 +182,8 @@
         nvim-dev = args@{ pkgs, ... }: {
           settings = common_settings args // {
             wrapRc = false;
-            unwrappedCfgPath = "/Users/neil/nixNvim";
+            unwrappedCfgPath = builtins.getEnv "PWD";
+                        #"/Users/neil/nixNvim";
           };
           categories = common_categories args // { };
         };
@@ -212,7 +213,7 @@
         devShells = {
           default = pkgs.mkShell {
             name = defaultPackageName;
-            packages = [ defaultPackage ];
+            packages = [ defaultPackage devPackage ];
             inputsFrom = [ ];
             shellHook = "";
           };
