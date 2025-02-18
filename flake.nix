@@ -9,7 +9,7 @@
     nixCats.url = "github:BirdeeHub/nixCats-nvim?dir=nix";
     lze.url = "github:BirdeeHub/lze";
     lze.inputs.nixpkgs.follows = "nixpkgs";
-      # see :help nixCats.flake.inputs
+    # see :help nixCats.flake.inputs
   };
 
   # see :help nixCats.flake.outputs
@@ -195,6 +195,7 @@
           inherit nixpkgs system dependencyOverlays extra_pkg_config;
         } categoryDefinitions packageDefinitions;
         defaultPackage = nixCatsBuilder defaultPackageName;
+        devPackage = nixCatsBuilder "nvim-dev";
         # this is just for using utils such as pkgs.mkShell
         # The one used to build neovim is resolved inside the builder
         # and is passed to our categoryDefinitions and packageDefinitions
@@ -204,7 +205,7 @@
 
         # this will make a package out of each of the packageDefinitions defined above
         # and set the default package to the one passed in here.
-        packages = utils.mkAllWithDefault defaultPackage;
+        packages = utils.mkAllWithDefault defaultPackage // utils.mkAllWithDefault devPackage;
 
         # choose your package for devShell
         # and add whatever else you want in it.
@@ -215,9 +216,9 @@
             inputsFrom = [ ];
             shellHook = "";
           };
-          nvim-dev = pkgs.mkShell {
-            name = "nvim-dev";
-            packages = [ nixCatsBuilder "nvim-dev" ];
+          nvim-dev-shell = pkgs.mkShell {
+            name = "nvim";
+            packages = [ devPackage ];
             inputsFrom = [ ];
             shellHook = "";
           };
