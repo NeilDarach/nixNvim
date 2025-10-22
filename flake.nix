@@ -4,9 +4,9 @@
   description = "Generic NVim configuation";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
-    nixCats.url = "github:BirdeeHub/nixCats-nvim?dir=nix";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
     lze.url = "github:BirdeeHub/lze";
     lze.inputs.nixpkgs.follows = "nixpkgs";
     # see :help nixCats.flake.inputs
@@ -71,7 +71,7 @@
               "onedark" = onedark-nvim;
               "catppuccin" = catppuccin-nvim;
             };
-            general = with pkgs.neovimPlugins; [
+            general = with pkgs.vimPlugins; [
               lze
               comment-nvim
               gitsigns-nvim
