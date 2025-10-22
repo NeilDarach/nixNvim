@@ -96,6 +96,7 @@
               nvim-treesitter.withAllGrammars
               lspkind-nvim
               vim-tmux-navigator
+              markdown-preview-nvim
             ];
             indent_line = [ indent-blankline-nvim ];
             lint = [ nvim-lint ];
@@ -183,7 +184,7 @@
           settings = common_settings args // {
             wrapRc = false;
             unwrappedCfgPath = builtins.getEnv "PWD";
-                        #"/Users/neil/nixNvim";
+            #"/Users/neil/nixNvim";
           };
           categories = common_categories args // { };
         };
@@ -206,7 +207,8 @@
 
         # this will make a package out of each of the packageDefinitions defined above
         # and set the default package to the one passed in here.
-        packages = utils.mkAllWithDefault defaultPackage // utils.mkAllWithDefault devPackage;
+        packages = utils.mkAllWithDefault defaultPackage
+          // utils.mkAllWithDefault devPackage;
 
         # choose your package for devShell
         # and add whatever else you want in it.
