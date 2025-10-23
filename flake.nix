@@ -63,6 +63,7 @@
             bash = [ nodePackages.bash-language-server shfmt shellcheck ];
             lua = [ stylua lua-language-server ];
             nix = [ nixd nixfmt-classic ];
+            typst = [ tinymist ];
           };
 
           # This is for plugins that will load at startup without using packadd:
@@ -109,6 +110,7 @@
           # this config uses lazy.nvim, so this isn't relevent
           optionalPlugins = with pkgs.vimPlugins; {
             rust = [ rust-vim rustaceanvim ];
+            typst = [ typst-preview-nvim ];
 
           };
 
@@ -163,7 +165,7 @@
         customPlugins = true;
         theme = true;
         colorscheme = "onedark";
-        autopairs = true;
+        autopairs = false;
         nvim-tree = true;
         lint = true;
         indent_line = true;
@@ -171,6 +173,7 @@
         have_nerd_font = true;
         nixdExtras = extraNixdItems pkgs;
         rust = true;
+        typst = true;
       };
 
       # see :help nixCats.flake.outputs.packageDefinitions
