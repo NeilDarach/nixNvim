@@ -7,12 +7,8 @@ end
 if colorschemer == "onedark" then
 	require("onedark").setup({
 		style = "darker",
-		colors = {
-			comment_grey = "#acb2bc",
-			bg1 = "#434854",
-		},
 		highlights = {
-			["@comment"] = { fg = "comment_grey" },
+			["Comment"] = { fg = "orange" },
 		},
 	})
 	require("onedark").load()
