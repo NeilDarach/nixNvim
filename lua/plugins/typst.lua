@@ -1,4 +1,4 @@
-if (os.execute("command -v typst") == 0) then
+if nixCats("typst") and (os.execute("command -v typst") == 0) then
     require("lze").load({
         "typst-preview.nvim",
         enabled = nixCats("typst"),

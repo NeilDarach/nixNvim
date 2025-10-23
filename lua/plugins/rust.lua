@@ -1,4 +1,4 @@
-if (os.execute("command -v rust-analyzer") == 0) then 
+if nixCats("rust") and (os.execute("command -v rust-analyzer") == 0) then
     require("lze").load({
         "rust.vim",
         enabled = nixCats("rust"),
