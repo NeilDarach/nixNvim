@@ -70,7 +70,7 @@ if nixCats("bash") then
 end
 
 local M = {}
-function M.on_attach(_, bufnr)
+function M.on_attach(client, bufnr)
     local map = function(keys, func, desc)
         vim.keymap.set("n", keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
     end
@@ -85,6 +85,17 @@ function M.on_attach(_, bufnr)
     map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
     map("K", vim.lsp.buf.hover, "Hover documentation")
     map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
+    if client.server_capabilities.documentFormattingProvider then
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			group = lsp_group,
+			buffer = bufnr,
+			callback = function()
+				-- Synchronous format on save
+				vim.lsp.buf.format({ bufnr = bufnr, async = false, timeout_ms = 1500 })
+			end,
+		})
+	end
     --[[
 					-- Highlight references of the word under the cursor when it rests there
 					--      -- :help CursorHold
