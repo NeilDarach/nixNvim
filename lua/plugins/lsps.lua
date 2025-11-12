@@ -58,7 +58,8 @@ end
 if nixCats("rust") and (os.execute('command -v rust-analyzer') == 0) then
     servers.rust_analyzer = {
         ["rust-analyzer"] = {
-            checkOnSave = { command = "clippy", },
+            checkOnSave = true,
+            check = { command = "clippy", },
         },
     };
 end
@@ -87,15 +88,15 @@ function M.on_attach(client, bufnr)
     map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
     if client.server_capabilities.documentFormattingProvider then
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = lsp_group,
-			buffer = bufnr,
-			callback = function()
-				-- Synchronous format on save
-				vim.lsp.buf.format({ bufnr = bufnr, async = false, timeout_ms = 1500 })
-			end,
-		})
-	end
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            group = lsp_group,
+            buffer = bufnr,
+            callback = function()
+                -- Synchronous format on save
+                vim.lsp.buf.format({ bufnr = bufnr, async = false, timeout_ms = 1500 })
+            end,
+        })
+    end
     --[[
 					-- Highlight references of the word under the cursor when it rests there
 					--      -- :help CursorHold
