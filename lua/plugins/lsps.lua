@@ -171,7 +171,8 @@ require("lze").load({
         after = function(plugin)
             if catUtils.isNixCats then
                 for server_name, cfg in pairs(servers) do
-                    require("lspconfig")[server_name].setup({
+                    vim.lsp.enable(server_name)
+                    vim.lsp.config(server_name,{
                         capabilities = M.get_capabilities(server_name),
                         settings = cfg,
                         filetypes = (cfg or {}).filetypes,
